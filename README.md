@@ -144,3 +144,12 @@ Testing básico (si te da tiempo)
    deployment.md
 
 Y en README.md solo dejas un resumen + links."# TaskWizard" 
+
+Modelo de usuario
+se realiza comúnmente utilizando Pydantic para la validación y SQLAlchemy o SQLModel para la persistencia en base de datos
+
+Es una buena práctica separar los modelos según el flujo de datos para evitar exponer información sensible como contraseñas.
+
+UserBase: Define los campos comunes (ej. email, nombre) que se compartirán entre todos los modelos.
+UserCreate: Hereda de UserBase e incluye el campo password en texto plano para el registro.
+User: El modelo de respuesta (salida) que no incluye la contraseña para proteger la privacidad del usuario.
