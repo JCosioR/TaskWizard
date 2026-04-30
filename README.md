@@ -1,3 +1,5 @@
+pip install pydantic[email]
+
 Sistema backend para gestión de tareas con autenticación, control de acceso y procesamiento asincrónico, similar a plataformas SaaS modernas.
 
 usuarios
