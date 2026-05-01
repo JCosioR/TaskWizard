@@ -3,8 +3,19 @@ from fastapi import FastAPI, Depends
 from schemas.user import User, UserCreate
 from db.session import get_db
 from sqlalchemy.orm import Session
+from crud.user import create_user, get_user
+from sqlalchemy import create_engine
+from db.models import Base
 
 app = FastAPI()
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)
+Base.metadata.create_all(bind=engine)
+
 
 @app.get("/")
 def read_root():
@@ -15,11 +26,7 @@ def read_root():
 def read_user():
     return {"user": "test"}
 
-# Receive email, full_name, id, is_active
-@app.post("/register")
-async def create_user(user: UserCreate):
-    new_user = user
-    return new_user
+
 
 #@app.post("/users/")    # esto va en db.session.py?
 #async def create_user():
@@ -30,13 +37,13 @@ async def create_user(user: UserCreate):
 #    db.refresh(db_user)
 #    return db_user
 
-# Create (Create) // esto está en main
 @app.post("/register_new")
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    # db es la sesión de SQLAlchemy que se va a usar
-    # Se simula el guardado
-    print(f"Guardando a {user.full_name} en la DB")
-    return {"message": "Usuario recibido", "db_status": "Connected"}
+def create_user_endpoint(user_in: UserCreate, db: Session = Depends(get_db)):
+    return create_user(user_in=user_in, db=db)
+
+@app.get("/users/{user_id}")
+def get_user_endpoint(user_id: int, db: Session = Depends(get_db)):
+    return get_user(user_id=user_id, db=db)
 
 """
 # CRUD operations

@@ -12,10 +12,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-def get_engine():
-    engine = engine
-    try:
-        yield engine
-    except ValueError:
-        return
