@@ -13,3 +13,9 @@ class User(UserBase):
 
     class config:
         from_attributes = True # Permite leer datos de modelos ORM -- investigar luego (doubts.md)
+
+class UserResponse(UserBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
