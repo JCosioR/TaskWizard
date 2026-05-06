@@ -1,7 +1,7 @@
 # Define una instancia app = FastAPI() y una ruta básica
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from crud.user import create_user, get_user, get_user_list, update_user
+from crud.user import create_user, get_user, get_user_list, update_user, delete_user
 from sqlalchemy import create_engine
 from db.session import get_db
 from db.models import Base
@@ -68,15 +68,17 @@ def update_user_endpoint(user_id: int, user_up: UserCreate, db: Session = Depend
         )
     return update_user(user_id=user_id, user_up=user_up, db=db)
 
-"""
-# CRUD operations
-# Create (Create)
-@app.post("/items/")
-async def create_item(name: str, description: str):
-    db = SessionLocal()
-    db_item = Item(name=name, description=description)
-    db.add(db_item)
-    db.commit()
-    db.refresh(db_item)
-    return db_item
-    """
+@app.delete("/users/{user_id}")
+def delete_user_endpoint(user_id: int, db: Session = Depends(get_db)):
+    db_user = get_user(user_id, db)
+
+    if db_user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="User not found"
+        )
+    else:
+        return delete_user(db_user=db_user, db=db)
+
+
+

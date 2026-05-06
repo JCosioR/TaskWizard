@@ -36,10 +36,7 @@ def update_user(user_id, user_up, db: Session):
         db.refresh(db_user)
     return db_user
 
-"""async def update_item(item_id: int, name: str, description: str):
-    db = SessionLocal()
-    db_item = db.query(Item).filter(Item.id == item_id).first()
-    db_item.name = name
-    db_item.description = description
+def delete_user(db_user, db: Session):
+    db.delete(db_user)
     db.commit()
-    return db_item"""
+    return {"message": "User deleted successfully"}
