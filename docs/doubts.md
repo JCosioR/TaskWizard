@@ -18,7 +18,7 @@ Fuentes de estudio
 - Como guardar contraseñas en SQLAlchemy
 
 
-# 1ro multiinquilinos / multitenant 
+# 1ra asesoría: multiinquilinos / multitenancy 
 uuid version 4 32 y corto
 fuentes: ibm y medium
 

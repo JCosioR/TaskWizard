@@ -16,6 +16,14 @@ engine = create_engine(
 )
 Base.metadata.create_all(bind=engine)
 
+@app.post("/tenants")
+def create_tenant(tenant_in: TenantCreate, db: Session = Depends(get_db)):
+    if get_tenant_by_name(tenant_in, db):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, 
+            detail="Tenant already exists"
+        )
+    return create_tenant(tenant_in=tenant_in, db=db)
 
 @app.get("/")
 def read_root():

@@ -1,4 +1,5 @@
 pip install pydantic[email]
+pip install fastapi psycopg2 sqlalchemy alembic pydantic_settings
 
 Sistema backend para gestión de tareas con autenticación, control de acceso y procesamiento asincrónico, similar a plataformas SaaS modernas.
 
