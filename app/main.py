@@ -1,12 +1,15 @@
+# app.main.py
 # Define una instancia app = FastAPI() y una ruta básica
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from crud.user import create_user, get_user, get_user_list, update_user, delete_user, get_user_by_emaiil
 from sqlalchemy import create_engine
 from db.session import get_db
 from db.models import Base
-from schemas.user import UserCreate, UserResponse
-
+from schemas.user import UserCreate, UserResponse, TenantCreate
+from crud.user import (create_user, get_user, get_user_list, update_user, 
+                       delete_user, get_user_by_emaiil, create_tenant,
+                       get_tenant_by_name)
+   
 app = FastAPI()
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -17,8 +20,8 @@ engine = create_engine(
 Base.metadata.create_all(bind=engine)
 
 @app.post("/tenants")
-def create_tenant(tenant_in: TenantCreate, db: Session = Depends(get_db)):
-    if get_tenant_by_name(tenant_in, db):
+def create_tenant_endpoint(tenant_in: TenantCreate, db: Session = Depends(get_db)):
+    if get_tenant_by_name(tenant_in.name, db):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, 
             detail="Tenant already exists"

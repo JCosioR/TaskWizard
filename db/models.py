@@ -1,3 +1,4 @@
+# db.models.py
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -15,7 +16,7 @@ class Tenant(Base):
 class UserDB(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key= True, index=True)
-    email = Column(String(255), unique=True, nullable=False, index=True) 
+    email = Column(String(255), nullable=False, index=True) 
     full_name =  Column(String, index=True)
     password = Column(String)
     is_active = Column(Boolean, index=True)

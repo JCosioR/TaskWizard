@@ -15,4 +15,6 @@ La tabla tenants debe llevar __tablename__, id y name
 2. Relacionar Tenants con UserDB
 Se agrega una columna tenant_id
 3. Actualizar queries
-Todas las queries deben filtrar por tenant_id
+Todas las queries deben filtrar por tenant_id (cuándo el create?)
+
+Dudas: crear TenantCreate y get_tenant_by_name para crear tenants? Cómo se crean Tenants en un SaaS en producción?

@@ -1,20 +1,16 @@
+# schemas.tenant.py
 from pydantic import BaseModel, EmailStr
 
-class UserBase(BaseModel):
-    email: EmailStr
-    full_name: str | None = None
-
-class UserCreate(UserBase):
-    password: str
-
-class User(UserBase):
+class TenantCreate(BaseModel):
+    name: str
+    
+class Tenant(TenantCreate):
     id: int
-    is_active: bool = True
 
     class Config:
         from_attributes = True # Permite leer datos de modelos ORM -- investigar luego (doubts.md)
 
-class UserResponse(UserBase):
+class TenantResponse(TenantBase):
     id: int
     
     class Config:
